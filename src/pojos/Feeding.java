@@ -3,15 +3,15 @@ package pojos;
 import db.ZooDatabaseMock;
 
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
+import java.util.Date;
 
 public class Feeding extends BasicObject
 {
   private long animalID;
   private Animal animal = null;
   private float amount;
-  private Calendar feeddate;
-  private static SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+  private Date feeddate;
+  public static SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
   public long getAnimalID()
   {
@@ -33,12 +33,12 @@ public class Feeding extends BasicObject
     this.amount = amount;
   }
 
-  public Calendar getFeeddate()
+  public Date getFeeddate()
   {
     return feeddate;
   }
 
-  public void setFeeddate(Calendar feeddate)
+  public void setFeeddate(Date feeddate)
   {
     this.feeddate = feeddate;
   }
@@ -56,6 +56,6 @@ public class Feeding extends BasicObject
   @Override
   public String getString()
   {
-    return (getAnimal() != null ? getAnimal().getName() : "??") + " - " + amount + " - " + Feeding.sdf.format(feeddate.getTime());
+    return (getAnimal() != null ? getAnimal().getName() : "??") + " - " + amount + " - " + Feeding.sdf.format(feeddate);
   }
 }

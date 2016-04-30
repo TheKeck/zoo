@@ -6,7 +6,9 @@ import pojos.Species;
 import pojos.Zoo;
 
 import java.io.Console;
+import java.text.ParseException;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Main
@@ -25,6 +27,7 @@ public class Main
       System.out.println("3) Add a zoo");
       System.out.println("4) Add a species");
       System.out.println("5) List feedings");
+      System.out.println("6) Record a feeding");
       System.out.println("0) Exit (Data will not be saved!)");
       Console console = System.console();
       input = console.readLine();
@@ -39,6 +42,8 @@ public class Main
         addSpecies();
       else if (StringUtils.equalsIgnoreCase("5", input))
         listFeedings();
+      else if (StringUtils.equalsIgnoreCase("6", input))
+        addFeeding();
       else if (StringUtils.equalsIgnoreCase("0", input))
         System.out.println("Goodbye!");
       else
@@ -68,10 +73,54 @@ public class Main
     ZooDatabaseMock.getInstance().insertAnimal(animal);
   }
 
+  private static void addFeeding()
+  {
+    try
+    {
+      System.out.println("What zoo are you at?");
+      listZoos();
+      Console console = System.console();
+      String input = console.readLine();
+      long zooID = Long.parseLong(input);
+
+      System.out.println("What is the species being fed?");
+      listSpecies();
+      input = console.readLine();
+      long speciesID = Long.parseLong(input);
+
+      System.out.println("Which animal was fed?");
+      listAnimalsInGroup(zooID, speciesID);
+      input = console.readLine();
+      long animalID = Long.parseLong(input);
+
+      System.out.println("How much did the animal eat?");
+      input = console.readLine();
+      float amount = Float.parseFloat(input);
+
+      System.out.println("When was the feeding (mm/dd/yyyy)?");
+      input = console.readLine();
+      Date  feeddate = Feeding.sdf.parse(input);
+      ZooDatabaseMock.getInstance().insertFeeding(animalID, amount, feeddate);
+    }
+    catch (Exception e)
+    {
+      System.out.println("Couldn't store feeding: " + e.getMessage());
+      return;
+    }
+  }
+
   private static void listAnimals()
   {
     System.out.println("ID - Name - Species - Zoo");
     List<Animal> animals = ZooDatabaseMock.getInstance().getAnimalList();
+    for (Animal animal : animals)
+      System.out.println(animal.getString());
+  }
+
+  private static void listAnimalsInGroup(long zooID, long speciesID)
+  {
+    System.out.println("ID - Name - Species - Zoo");
+    List<Animal> animals = ZooDatabaseMock.getInstance().getAnimalGroup(zooID, speciesID);
     for (Animal animal : animals)
       System.out.println(animal.getString());
   }
@@ -130,10 +179,10 @@ public class Main
     animal.setZooID(2);
     animal.setSpeciesID(1);
     ZooDatabaseMock.getInstance().insertAnimal(animal);
-    ZooDatabaseMock.getInstance().insertFeeding(1, 3, Calendar.getInstance());
-    ZooDatabaseMock.getInstance().insertFeeding(1, 2.5f, Calendar.getInstance());
-    ZooDatabaseMock.getInstance().insertFeeding(2, .25f, Calendar.getInstance());
-    ZooDatabaseMock.getInstance().insertFeeding(2, .3f, Calendar.getInstance());
+    ZooDatabaseMock.getInstance().insertFeeding(1, 3, Calendar.getInstance().getTime());
+    ZooDatabaseMock.getInstance().insertFeeding(1, 2.5f, Calendar.getInstance().getTime());
+    ZooDatabaseMock.getInstance().insertFeeding(2, .25f, Calendar.getInstance().getTime());
+    ZooDatabaseMock.getInstance().insertFeeding(2, .3f, Calendar.getInstance().getTime());
   }
 
 

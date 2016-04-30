@@ -3,6 +3,7 @@ package db;
 import pojos.*;
 
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
@@ -29,7 +30,7 @@ public class ZooDatabaseMock
     newAnimal.setID(getNextID(animalList));
     animalList.add(newAnimal);
   }
-  public void insertFeeding(long animalID, float amount, Calendar feeddate)
+  public void insertFeeding(long animalID, float amount, Date feeddate)
   {
     Feeding feeding = new Feeding();
     feeding.setID(getNextID(feedingList));
@@ -42,6 +43,17 @@ public class ZooDatabaseMock
   public List<Animal> getAnimalList()
   {
     return animalList;
+  }
+
+  public List<Animal> getAnimalGroup(long zooID, long speciesID)
+  {
+    List<Animal> groupAnimals = new Vector<>();
+    for (Animal animal : animalList)
+    {
+      if (animal.getZooID() == zooID && animal.getSpeciesID() == speciesID)
+        groupAnimals.add(animal);
+    }
+    return groupAnimals;
   }
 
   public List<Zoo> getZooList()
