@@ -1,10 +1,12 @@
 import db.ZooDatabaseMock;
 import org.apache.commons.lang.StringUtils;
 import pojos.Animal;
+import pojos.Feeding;
 import pojos.Species;
 import pojos.Zoo;
 
 import java.io.Console;
+import java.util.Calendar;
 import java.util.List;
 
 public class Main
@@ -22,6 +24,7 @@ public class Main
       System.out.println("2) See list of animals");
       System.out.println("3) Add a zoo");
       System.out.println("4) Add a species");
+      System.out.println("5) List feedings");
       System.out.println("0) Exit (Data will not be saved!)");
       Console console = System.console();
       input = console.readLine();
@@ -34,6 +37,8 @@ public class Main
         addZoo();
       else if (StringUtils.equalsIgnoreCase("4", input))
         addSpecies();
+      else if (StringUtils.equalsIgnoreCase("5", input))
+        listFeedings();
       else if (StringUtils.equalsIgnoreCase("0", input))
         System.out.println("Goodbye!");
       else
@@ -69,6 +74,14 @@ public class Main
     List<Animal> animals = ZooDatabaseMock.getInstance().getAnimalList();
     for (Animal animal : animals)
       System.out.println(animal.getString());
+  }
+
+  private static void listFeedings()
+  {
+    System.out.println("Animal - Amount - Date");
+    List<Feeding> feedings = ZooDatabaseMock.getInstance().getFeedingList();
+    for (Feeding feeding : feedings)
+      System.out.println(feeding.getString());
   }
 
   private static void listSpecies()
@@ -117,6 +130,10 @@ public class Main
     animal.setZooID(2);
     animal.setSpeciesID(1);
     ZooDatabaseMock.getInstance().insertAnimal(animal);
+    ZooDatabaseMock.getInstance().insertFeeding(1, 3, Calendar.getInstance());
+    ZooDatabaseMock.getInstance().insertFeeding(1, 2.5f, Calendar.getInstance());
+    ZooDatabaseMock.getInstance().insertFeeding(2, .25f, Calendar.getInstance());
+    ZooDatabaseMock.getInstance().insertFeeding(2, .3f, Calendar.getInstance());
   }
 
 

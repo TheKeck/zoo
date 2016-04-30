@@ -18,3 +18,11 @@ CREATE TABLE zoo
   name        varchar2(256)
 );
 
+CREATE TABLE feedings
+(
+  id          INTEGER PRIMARY KEY,
+  animal_id   INTEGER CONSTRAINT f_animal_id_fk REFERENCES animal(id),
+  amount      NUMBER,
+  feeddate    DATE
+)
+

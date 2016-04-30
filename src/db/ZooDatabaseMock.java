@@ -1,10 +1,8 @@
 package db;
 
-import pojos.Animal;
-import pojos.BasicObject;
-import pojos.Species;
-import pojos.Zoo;
+import pojos.*;
 
+import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
@@ -13,6 +11,7 @@ public class ZooDatabaseMock
   private List<Animal> animalList = new Vector<>();
   private List<Zoo> zooList = new Vector<>();
   private List<Species> speciesList = new Vector<>();
+  private List<Feeding> feedingList = new Vector<>();
 
   private static ZooDatabaseMock _global = new ZooDatabaseMock();
 
@@ -29,6 +28,15 @@ public class ZooDatabaseMock
   {
     newAnimal.setID(getNextID(animalList));
     animalList.add(newAnimal);
+  }
+  public void insertFeeding(long animalID, float amount, Calendar feeddate)
+  {
+    Feeding feeding = new Feeding();
+    feeding.setID(getNextID(feedingList));
+    feeding.setAnimalID(animalID);
+    feeding.setAmount(amount);
+    feeding.setFeeddate(feeddate);
+    feedingList.add(feeding);
   }
 
   public List<Animal> getAnimalList()
@@ -91,5 +99,20 @@ public class ZooDatabaseMock
         return species;
     }
     return null;
+  }
+
+  public Animal loadAnimal(long id)
+  {
+    for (Animal animal : animalList)
+    {
+      if (id == animal.getID())
+        return animal;
+    }
+    return null;
+  }
+
+  public List<Feeding> getFeedingList()
+  {
+    return feedingList;
   }
 }
