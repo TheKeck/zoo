@@ -4,9 +4,9 @@ import pojos.Animal;
 import pojos.Feeding;
 import pojos.Species;
 import pojos.Zoo;
+import services.ReportService;
 
 import java.io.Console;
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -28,6 +28,7 @@ public class Main
       System.out.println("4) Add a species");
       System.out.println("5) List feedings");
       System.out.println("6) Record a feeding");
+      System.out.println("7) Individual Animal Feeding Record Report");
       System.out.println("0) Exit (Data will not be saved!)");
       Console console = System.console();
       input = console.readLine();
@@ -44,6 +45,8 @@ public class Main
         listFeedings();
       else if (StringUtils.equalsIgnoreCase("6", input))
         addFeeding();
+      else if (StringUtils.equalsIgnoreCase("7", input))
+        displayFeedingReport();
       else if (StringUtils.equalsIgnoreCase("0", input))
         System.out.println("Goodbye!");
       else
@@ -172,12 +175,12 @@ public class Main
     Animal animal = new Animal();
     animal.setName("Leo");
     animal.setZooID(1);
-    animal.setSpeciesID(2);
+    animal.setSpeciesID(1);
     ZooDatabaseMock.getInstance().insertAnimal(animal);
     animal = new Animal();
     animal.setName("George");
     animal.setZooID(2);
-    animal.setSpeciesID(1);
+    animal.setSpeciesID(2);
     ZooDatabaseMock.getInstance().insertAnimal(animal);
     ZooDatabaseMock.getInstance().insertFeeding(1, 3, Calendar.getInstance().getTime());
     ZooDatabaseMock.getInstance().insertFeeding(1, 2.5f, Calendar.getInstance().getTime());
@@ -185,5 +188,9 @@ public class Main
     ZooDatabaseMock.getInstance().insertFeeding(2, .3f, Calendar.getInstance().getTime());
   }
 
+  private static void displayFeedingReport()
+  {
+    ReportService.displayFeedingReport();
+  }
 
 }

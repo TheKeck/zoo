@@ -127,4 +127,15 @@ public class ZooDatabaseMock
   {
     return feedingList;
   }
+
+  public List<Feeding> loadFeedingsForAnimal(long animalID)
+  {
+    List<Feeding> feedings = new Vector<>();
+    for (Feeding feeding : feedingList)
+    {
+      if (feeding.getAnimalID() == animalID)
+        feedings.add(feeding);
+    }
+    return feedings;
+  }
 }

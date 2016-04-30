@@ -38,6 +38,11 @@ public class Feeding extends BasicObject
     return feeddate;
   }
 
+  public String getFeeddateString()
+  {
+    return sdf.format(feeddate);
+  }
+
   public void setFeeddate(Date feeddate)
   {
     this.feeddate = feeddate;
