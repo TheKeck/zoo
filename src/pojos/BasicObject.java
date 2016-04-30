@@ -1,6 +1,6 @@
 package pojos;
 
-public class BasicObject
+public abstract class BasicObject
 {
   private long ID;
   private String name;
@@ -24,4 +24,6 @@ public class BasicObject
   {
     this.name = name;
   }
+
+  public abstract String getString();
 }
